@@ -223,3 +223,20 @@ form.login-buttons {
     left: 50%;
     top:50%;
 }
+
+/* Tycho tryout divs */
+#container {
+    display: flex;
+}
+#main_window {
+    /* Grow to rest of container */
+    flex: 1;
+}
+
+#small_window {
+  width: 10%;
+
+}
+#med_window {
+  width: 20%;
+}

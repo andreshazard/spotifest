@@ -68,7 +68,8 @@ class User(UserMixin):
 class UserCache():
     def __init__(self, artists=set(), hotness=None, danceability=None, enery=None,
                 energy=None, variety=None, adventurousness=None, organizer=0,
-                search_results=list(), festival_name=None):
+                search_results=list(), festival_name=None, user_festivals=None,
+                user_id=None):
         self.artists = artists
         self.hotness = hotness
         self.danceability = danceability
@@ -78,6 +79,8 @@ class UserCache():
         self.organizer = organizer
         self.search_results = search_results
         self.festival_name = festival_name
+        self.user_festivals = user_festivals
+        self.user_id = user_id
 
 
 user_cache = UserCache()
@@ -142,7 +145,6 @@ def home(config=BaseConfig):
 
     render home.html
     '''
-
     code = request.args.get('code')
     active_user = session.get('user_id')
     if request.method == 'GET':
@@ -150,7 +152,6 @@ def home(config=BaseConfig):
             auth_url = login()
             return render_template('home.html', login=False, oauth=auth_url)
         else:
-
             if not User.users or not session.get('user_id'):
 
                 # log user to session (Flask-Login)
@@ -160,16 +161,22 @@ def home(config=BaseConfig):
                 user_id = s.me()['id']
                 new_user = User(user_id, token, response['refresh_token'])
                 login_user(new_user)
+                user_cache.user_id = user_id
             # at this point, user is logged in, so if you click "Create"
 
             current_user = load_user(session.get('user_id')).access
             s = spotipy.Spotify(auth=current_user)
 
+            
+    user_cache.user_festivals = db.get_user_festivals(user_cache.user_id)
+
     if request.method == 'POST':
         url_slug = request.form['festival_id']
         print ("FESTIVAL ID OR URL SLUGGY IS {}".format(url_slug))
         return redirect(url_for('join', url_slug=url_slug))
-    return render_template('home.html', login=True)
+    return render_template('home.html', login=True, 
+                            user_festivals=user_cache.user_festivals,
+                            user_id=user_cache.user_id)
 
 
 @app.route('/festival/join/<url_slug>', methods=['GET'])
