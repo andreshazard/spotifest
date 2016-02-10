@@ -132,6 +132,8 @@ def get_contributors(festivalId):
                                         'variety': u[6],
                                         'adventurousness': u[7]} for u in d2}
             print (contributors)
+            c_names = [c for c in contributors]
+            contributors['c_names'] = c_names
             all_ready = 1
             for contributor in contributors:
                 if contributors[contributor]['ready'] == 0:

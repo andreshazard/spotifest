@@ -48,6 +48,9 @@
 
 #flash {
     color: red;
+    position:absolute;
+    left:50%; top:29%;
+    transform: translate(-50%);
 }
 
 
@@ -68,12 +71,34 @@ a:hover {
   border: 1px solid #fff;
 }
 
+.logo {
+  font-weight:200;  
+  font-style: italic;
+}
+
+h1{
+  font-weight:bolder;
+  color:#ffffff;
+  margin: 5px;
+}
+
+h2 {
+  color:rgb(255, 255, 255);
+  font-size: 14px;
+  font-style: oblique;
+  font-weight: bold;
+  margin: 5px;
+}
+
 
 /*
  * Base structure
  */
 
 html,
+
+
+
 body {
   height: 100%;
   background-image: url('/static/background.png');
@@ -221,11 +246,13 @@ body {
 
 .col-sm-5 {
     width: 41.666667%;
+    border-style:solid;
   }
 
 .row {
   margin-right: -.9375rem;
   margin-left: -.9375rem;
+  border-style:solid;
 }
 
 .row::after {
@@ -278,35 +305,49 @@ body {
 /* Flexbox CSS */
 
 .flex-container {
+  position: relative; top: 25%;
   display: flex;
   align-items: flex-start;
-  flex-direction: row;
-  /* border-style: solid; */
+  /*border-style: solid;*/
   width: auto;
   justify-content: space-between;
+  text-align: right;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
 }
 
 .flex-left {
   order: -1;
   /*overflow-x: hidden;*/
-  /* border-style: solid;*/
+  /*border-style: solid;*/
   width: 200px;
 }
 
 .flex-center {
   order: 0;
   overflow-x: hidden;
-  /* border-style: solid;*/
+  margin-right: auto;
+  margin-left: auto;
+  /*border-style: solid;*/
+  text-align: center;
 }
 
 .flex-right {
   order: 1;
-  /* border-style: solid;*/
+  /*order-style: solid;*/
   width: 200px;
 }
 
 .hot-links {
-  position: relative; top: -20px;
+  position: relative;
   border: 3px solid #5cb85c;
   background: black;
   text-align: left;
@@ -314,6 +355,15 @@ body {
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.over-top {
+  position: relative; top: -20px;
+}
+
+.hanging-in {
+  position: relative; top: 100px;
 }
 
 .hot-links > ul {
@@ -329,6 +379,7 @@ body {
   margin-bottom: 2px;
   padding-left: 5px;
   padding-right: 5px;
+
 }
 .hot-links > ul > li:hover {
   background-color: #449d44;
