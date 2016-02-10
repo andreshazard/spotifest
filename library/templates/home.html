@@ -22,7 +22,7 @@
                 <p class="login-page">Don't wait - put together your own using you and your friends' music preferences.</p>
                 <p class="login-page">Log in to get started or join up <a href="#">with a friend</a>!</p>
                 <br>
-                <a href="{{ oauth }}"><input name="submit" class="btn btn-success btn-lg" value="Login" type="button"></input></a>
+                <a href="{{ oauth }}"><input name="submit" class="btn btn-success btn-lg" value="Log in!" type="button"></input></a>
         </div>
     </div>
 
@@ -38,13 +38,16 @@
         </div>
         <div class="flex-container flex-row">
             <div class="flex-left hot-links rcorners over-top">
-                Contributor to
-                <ul>
-                    <li> <a>New jazz festival</a></li>
-                    <li> <a>Hip hop battles</a></li>
-                    <li> <a>Tester</a></li>
-                    <li> <a>Something</a></li>
-                </ul>
+                {% if user_festivals['contributor'] %}
+                    <br>Contributor to:
+                    <ul>{% for festival_id in user_festivals['contributor'] %}
+                    <li> <a href="{{  url_for('festival', url_slug=user_festivals['contributor'][festival_id]['url_slug']) }}"> {{ user_festivals['contributor']['user_id']}}'s {{ user_festivals['contributor'][festival_id]['festival_name'] }}</a>
+                {% endfor %}</ul>
+            {% else %}
+                <h1>Did you know?</h1>
+                You can organize a festival playlist with your friends! Create a festival and spread the word to anyone you want!
+            {% endif %}
+
             </div>
             <div class="flex-center">
                     <br>
@@ -59,19 +62,18 @@
                     </div>
                     </p>
             </div>
-            <div class="flex-right hot-links rcorners over-top">
-                Favourites
-                <ul>
-                    <li> <a>Mike mike's Festival</a></li>
-                    <li> <a>Lounge list</a></li>
-                </ul>
-                Latest created festivals
-                <ul>
-                    <li> <a>New jazz festival</a></li>
-                    <li> <a>Hip hop battles</a></li>
-                    <li> <a>Tester</a></li>
-                    <li> <a>Something</a></li>
-                    </ul>
+            
+                {% if 'organizer' in user_festivals %}
+                <div class="flex-right hot-links rcorners over-top">
+                    {{ user_id }}'s festivals:
+                    <ul>{% for festival_id in user_festivals['organizer'] %}
+                        <li> <a href="{{  url_for('festival', url_slug=user_festivals['organizer'][festival_id]['url_slug']) }}"> {{ user_festivals['organizer'][festival_id]['festival_name'] }}</a>
+                {% endfor %}<ul>
+                {% else %}
+                <div class="flex-riht over-top">
+                </div>
+            {% endif %}
+
             </div>
         </div>
     </div>

@@ -75,6 +75,8 @@ class UserCache():
         self.organizer = organizer
         self.search_results = search_results
         self.festival_name = festival_name
+        self.user_id = None
+        self.user_festivals = None
 
     def save_preferences(self, artists, urlSlug):
         if not isinstance(artists, set):
@@ -197,16 +199,21 @@ def home(config=BaseConfig):
                 user_id = s.me()['id']
                 new_user = User(user_id, token, response['refresh_token'])
                 login_user(new_user)
+                user_cache.user_id = user_id
             # at this point, user is logged in, so if you click "Create"
 
             current_user = load_user(session.get('user_id')).access
             s = spotipy.Spotify(auth=current_user)
 
+    user_cache.user_festivals = db.get_user_festivals(user_cache.user_id)
+
     if request.method == 'POST':
         url_slug = request.form['festival_id']
         print ("FESTIVAL ID OR URL SLUGGY IS {}".format(url_slug))
         return redirect(url_for('join', url_slug=url_slug))
-    return render_template('home.html', login=True)
+    return render_template('home.html', login=True, 
+                            user_festivals=user_cache.user_festivals,
+                            user_id=user_cache.user_id)
 
 
 @app.route('/festival/join/<url_slug>', methods=['GET'])
