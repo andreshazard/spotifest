@@ -1,1 +1,1 @@
-import runserver
+from runserver import *
