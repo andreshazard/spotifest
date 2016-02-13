@@ -1,8 +1,7 @@
+from app import app, mysql, celery
+from pyechonest.catalog import Catalog
 import base64
 import datetime
-from . import app, mysql, celery
-from pyechonest.catalog import Catalog
-
 
 @celery.task(name='save_festival')
 def save_to_database(festivalName, userId, playlistId,

@@ -2,12 +2,11 @@ import random
 import spotipy
 import spotipy.util as util
 
-from flask import Flask
 from pyechonest import config
 from pyechonest import playlist
 from pyechonest import artist
 from pyechonest.catalog import Catalog
-from . import celery
+from app import celery
 # from festify.config import BaseConfig
 import os
 import datetime
