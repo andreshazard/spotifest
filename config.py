@@ -6,7 +6,10 @@ import sys
 
 class BaseConfig(object):
 
-    with open('./credentials.txt', 'r') as cred:
+    PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    os.chdir(PROJECT_ROOT)
+
+    with open('credentials.txt', 'r') as cred:
         CLIENT_ID = str(cred.readline().split('>')[1].replace('\n', ''))
         CLIENT_SECRET = str(cred.readline().split('>')[1].replace('\n', ''))
         REDIRECT_URI = str(cred.readline().split('>')[1].replace('\n', ''))
@@ -15,9 +18,6 @@ class BaseConfig(object):
 
     if not CLIENT_ID or not CLIENT_SECRET or not REDIRECT_URI:
         raise Exception('Credentials could not be configured. See credentials.txt.')
-
-
-    PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
     MYSQL_DATABASE_USER = 'root'
