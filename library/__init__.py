@@ -3,7 +3,7 @@ from flask import Flask
 from celery import Celery
 from flask.ext.login import LoginManager
 from flask.ext.mysql import MySQL
-from config import BaseConfig
+# from config import BaseConfig
 
 celery = Celery()
 login_manager = LoginManager()
@@ -24,7 +24,8 @@ def configure_app(app, config=None):
     """ 
     applies standard config but also allows for other configs
     """
-    app.config.from_object(BaseConfig)
+    # app.config.from_object(BaseConfig)
+    app.config.from_object('festify.config')
     if config:
         app.config.from_object(config)
 
