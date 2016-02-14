@@ -3,10 +3,11 @@ from datetime import timedelta
 import os
 import logging
 import sys
+import Flask
 
 class BaseConfig(object):
 
-    PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    PROJECT_ROOT = Flask.root_path
     os.chdir(PROJECT_ROOT)
 
     with open('credentials.txt', 'r') as cred:
