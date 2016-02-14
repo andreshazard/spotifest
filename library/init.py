@@ -3,14 +3,11 @@ from flask import Flask
 from celery import Celery
 from flask.ext.login import LoginManager
 from flask.ext.mysql import MySQL
-import os
+from config import BaseConfig, CELERY_BROKER_URL
 
-def full_path(file):
-    path = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(path, file)
-
-from festify.config import BaseConfig
-
+print (BaseConfig)
+print (BaseConfig) 
+print CELERY_BROKER_URL
 
 
 
@@ -18,17 +15,11 @@ def create_app(config=None, app_name=None, blueprints=None):
     app = Flask(__name__)
     return app
 
-
-#path = os.path.join(os.getcwd(), 'config.py')
-#os.environ['APP_CONFIG'] = path
 app = create_app()
-#app.config.from_envvar('APP_CONFIG')
-
 app.config.from_object(BaseConfig)
-print "this is base config ", BaseConfig
-print app.config['CELERY_BROKER_URL']
 
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+#celery = Celery(app.name, broker=CELERY_BROKER_URL)
 celery.conf.update(app.config)
 
 
