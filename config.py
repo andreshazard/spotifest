@@ -1,24 +1,16 @@
-# config.py
+#config.py
 from datetime import timedelta
 import os
 import logging
 import sys
 
-SECRET_KEY = 'this_is_a_secret'
-path = os.path.abspath('credentails.txt')
-os.chdir(path[:-15])
-# Celery config
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_TASK_RESULT_EXPIRES = 3600
-CELERYBEAT_SCHEDULE = {
-    'add-every-hour': {
-        'task': 'routine_deletion_expired',
-        'schedule': timedelta(minutes=60)
-    },
-}
-IS_ASYNC = False
 class BaseConfig(object):
+
+    # PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    # os.chdir(PROJECT_ROOT)
+
+    path = os.path.abspath('credentials.txt')
+    os.chdir(path[:-15])
 
     with open('credentials.txt', 'r') as cred:
         CLIENT_ID = str(cred.readline().split('>')[1].replace('\n', ''))
@@ -30,7 +22,23 @@ class BaseConfig(object):
     if not CLIENT_ID or not CLIENT_SECRET or not REDIRECT_URI:
         raise Exception('Credentials could not be configured. See credentials.txt.')
 
-MYSQL_DATABASE_USER = 'root'
-MYSQL_DATABASE_DB = 'festify'
-MYSQL_DATABASE_HOST = 'localhost'
-MYSQL_DATABASE_PASSWORD = BaseConfig.MYSQL_PASSWORD
+
+    MYSQL_DATABASE_USER = 'root'
+    MYSQL_DATABASE_DB = 'festify'
+    MYSQL_DATABASE_HOST = 'localhost'
+    MYSQL_DATABASE_PASSWORD = ''
+
+    # Secret key
+    SECRET_KEY = 'this_is_a_secret'
+
+    # Celery config
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+    CELERY_TASK_RESULT_EXPIRES = 3600
+    CELERYBEAT_SCHEDULE = {
+        'add-every-hour': {
+            'task': 'routine_deletion_expired',
+            'schedule': timedelta(minutes=60)
+        },
+    }
+    IS_ASYNC = True
