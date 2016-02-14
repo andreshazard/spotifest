@@ -3,7 +3,7 @@ from datetime import timedelta
 import os
 import logging
 import sys
-import Flask
+from flask import Flask
 
 class BaseConfig(object):
 
