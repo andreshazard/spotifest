@@ -6,7 +6,7 @@ import sys
 
 class BaseConfig(object):
 
-    with open('credentials.txt', 'r') as cred:
+    with open('./credentials.txt', 'r') as cred:
         CLIENT_ID = str(cred.readline().split('>')[1].replace('\n', ''))
         CLIENT_SECRET = str(cred.readline().split('>')[1].replace('\n', ''))
         REDIRECT_URI = str(cred.readline().split('>')[1].replace('\n', ''))

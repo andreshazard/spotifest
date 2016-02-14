@@ -1,6 +1,6 @@
 from app import app, celery, login_manager
 from helpers import (suggested_artists, random_catalog, seed_playlist)
-from config import BaseConfig
+from ..config import BaseConfig
 import helpers
 import frontend_helpers
 import db

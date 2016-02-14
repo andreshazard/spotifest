@@ -3,7 +3,7 @@ from flask import Flask
 from celery import Celery
 from flask.ext.login import LoginManager
 from flask.ext.mysql import MySQL
-from config import BaseConfig
+from ..config import BaseConfig
 
 celery = Celery()
 login_manager = LoginManager()
